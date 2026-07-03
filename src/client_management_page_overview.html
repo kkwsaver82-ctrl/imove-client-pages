@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>아이무브 개별 운동발달 관리 페이지</title>
+  <style>
+    :root{
+      --bg:#f4f7f5; --paper:#fff; --ink:#172321; --muted:#5d6b67; --line:#dfe8e3;
+      --main:#276757; --main-deep:#17463c; --blue:#426f96; --amber:#b87235;
+      --good-bg:#eaf5ef; --good:#246348; --warn-bg:#fff4df; --warn:#86520a; --danger-bg:#fdece7; --danger:#9a3d24;
+      --shadow:0 8px 22px rgba(28,55,48,.06); --r:18px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif;line-height:1.65;word-break:keep-all;padding-bottom:60px}
+    a{color:inherit}.container{max-width:900px;margin:0 auto;padding:0 18px}.hero{background:linear-gradient(135deg,var(--main-deep),var(--main));color:#fff;padding:38px 0 54px;border-radius:0 0 30px 30px;box-shadow:var(--shadow)}
+    .eyebrow{font-size:13px;letter-spacing:.08em;font-weight:700;opacity:.82}.hero h1{font-size:30px;line-height:1.25;margin:10px 0 10px}.subtitle{max-width:760px;margin:0;opacity:.86;font-size:15px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.14);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}.top-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btn{border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;background:#fff;color:var(--main-deep);text-decoration:none;display:inline-flex;align-items:center;gap:6px}.btn.secondary{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3)}
+    .notice{margin-top:-28px}.notice .box{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}.box b{color:var(--main-deep)}
+    .nav{position:sticky;top:0;z-index:5;background:rgba(244,247,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:10px 0}.nav-scroll{display:flex;gap:8px;overflow:auto}.nav a{white-space:nowrap;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;color:var(--main-deep)}
+    main{padding-top:20px}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px;margin:18px 0}.card h2{font-size:18px;margin:0 0 16px;display:flex;align-items:center;gap:10px;color:var(--main-deep)}.num{width:26px;height:26px;border-radius:8px;background:var(--main);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}@media(max-width:720px){.grid,.grid3{grid-template-columns:1fr}.hero h1{font-size:25px}.card{padding:18px}}
+    .field{border:1px solid var(--line);background:#fbfdfb;border-radius:14px;padding:13px 14px}.label{font-size:12px;color:var(--muted);margin-bottom:4px}.value{font-size:16px;font-weight:850}.small{font-size:13px;color:var(--muted)}.pill{display:inline-flex;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:800}.good{background:var(--good-bg);color:var(--good)}.warn{background:var(--warn-bg);color:var(--warn)}.danger{background:var(--danger-bg);color:var(--danger)}
+    .alert{border-radius:14px;padding:13px 14px;margin-top:12px;font-size:14px}.alert.good{background:var(--good-bg);color:var(--good)}.alert.warn{background:var(--warn-bg);color:var(--warn)}.alert.danger{background:var(--danger-bg);color:var(--danger)}
+    .timeline{display:grid;gap:12px}.visit{border-left:4px solid var(--main);background:#fbfdfb;border-radius:0 14px 14px 0;padding:12px 14px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.visit-date{font-size:13px;font-weight:900;color:var(--main-deep)}
+    .goal{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.goal:last-child{border-bottom:none}.icon{width:36px;height:36px;border-radius:11px;background:var(--main);color:white;display:flex;align-items:center;justify-content:center;font-weight:900}.goal b{display:block;margin-bottom:2px}.goal span{font-size:14px;color:var(--muted)}
+    .home-list{display:grid;gap:10px}.home{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:#fbfdfb}.home-title{font-weight:900}.home-meta{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}.home-meta span{font-size:12px;border-radius:999px;background:#eef5f1;color:var(--main-deep);padding:3px 8px;font-weight:800}.footer{margin:26px auto 0;text-align:center;color:var(--muted);font-size:12px;max-width:780px}.footer strong{color:var(--main-deep)}
+    .edit-guide{background:#f8fbfa}.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#eef4f1;border:1px solid var(--line);border-radius:10px;padding:10px;overflow:auto;font-size:12px;white-space:pre-wrap}.hide-print{}@media print{.nav,.top-actions,.hide-print{display:none!important}.hero{border-radius:0;box-shadow:none}.notice{margin-top:12px}.card,.notice .box{box-shadow:none}body{background:#fff}.container{max-width:100%;padding:0 10px}}
+
+    /* 한눈에 보기 모드: 채팅창/작은 미리보기에서도 전체 구성이 보이도록 압축 */
+    @media screen{
+      body{padding-bottom:18px;font-size:12px;line-height:1.42;}
+      .container{max-width:1180px;padding:0 12px;}
+      .hero{padding:18px 0 28px;border-radius:0 0 22px 22px;}
+      .eyebrow{font-size:11px}.hero h1{font-size:24px;margin:5px 0}.subtitle{font-size:12px}.chips{margin-top:10px;gap:6px}.chip{padding:4px 9px;font-size:11px}
+      .notice{margin-top:-16px}.notice .box{padding:10px 13px;font-size:12px;border-radius:14px}
+      .nav{display:none}
+      main{display:grid;grid-template-columns:1.05fr 1.05fr;gap:10px;padding-top:12px}
+      .card{margin:0;padding:12px 13px;border-radius:14px}
+      .card h2{font-size:14px;margin-bottom:8px}.num{width:20px;height:20px;font-size:11px;border-radius:6px}
+      .grid{gap:8px}.field{padding:8px 9px;border-radius:10px}.label{font-size:10px}.value{font-size:12px}.small{font-size:11px}
+      .alert{margin-top:6px;padding:8px 9px;font-size:11px;border-radius:10px}
+      .goal{grid-template-columns:24px 1fr;padding:7px 0;gap:8px}.icon{width:24px;height:24px;border-radius:7px;font-size:11px}.goal span{font-size:11px}
+      .home-list,.timeline{gap:6px}.home,.visit{padding:7px 9px;font-size:11px;border-radius:10px}.home-meta{margin:4px 0}.home-meta span{font-size:10px;padding:2px 6px}.visit-date{font-size:11px}
+      .footer{margin-top:10px;font-size:10px}
+    }
+    @media(max-width:720px){main{grid-template-columns:1fr}.hero h1{font-size:21px}}
+
+  </style>
+</head>
+<body>
+<script>
+/* ========================================================================
+  [GPT 수정용 데이터 영역]
+  환자별로 이 CLIENT_DATA 안쪽 내용만 수정하면 됩니다.
+  이름 대신 이니셜/코드 사용을 권장합니다. 예: "김○○", "IM-2026-001"
+======================================================================== */
+const CLIENT_DATA = {
+  center: {
+    name: "아이무브 운동발달센터",
+    manager: "김건우 선생님",
+    phone: "010-0000-0000",
+    email: "center@example.com"
+  },
+  child: {
+    displayName: "홍길동",
+    code: "IM-2026-001",
+    age: 6,
+    gender: "남",
+    diagnosis: "뇌성마비 / 경직형 양마비",
+    gmfcs: 3,
+    macs: 2,
+    cfcs: 2,
+    mainConcern: "장거리 보행 피로, 좌측 하지 경직, 앉은 자세 비대칭",
+    lastUpdated: "2026-07-03"
+  },
+  body: {
+    heightCm: 116,
+    weightKg: 20.5,
+    dominantSide: "우측 사용 우세 / 좌측 하지 경직 우세",
+    spasticity: "MAS 1+~2, 좌측 햄스트링·비복근 우세",
+    orthosis: "AFO 착용 중, 2026년 6월 보정 완료",
+    surgeryHistory: "2024-11-02 하지 연부조직 수술 후 추적 관찰 중"
+  },
+  surveillance: {
+    hipMigrationPercent: 28,
+    hipDate: "2026-06-10",
+    scoliosisAngle: 18,
+    scoliosisDate: "2026-06-10",
+    xraySummary: "골반 촬영상 우측 경도 아탈구 의심 소견. 척추는 경도 측만 범위로 6개월 후 재평가 권고.",
+    nextMedicalCheck: "2026-12 예정"
+  },
+  currentGoals: [
+    {title:"앉은 자세 대칭성 향상", detail:"골반이 한쪽으로 무너지지 않도록 좌석 높이와 발 지지를 조정합니다."},
+    {title:"보행 보조기구 사용 효율 향상", detail:"워커 사용 시 보폭, 방향 전환, 피로도 조절을 함께 훈련합니다."},
+    {title:"고관절·척추 변형 위험 관리", detail:"장시간 비대칭 자세를 줄이고 정기 영상검사 결과를 추적합니다."},
+    {title:"가정운동 순응도 향상", detail:"보호자가 매일 10~15분 안에 실행할 수 있는 짧은 루틴을 유지합니다."}
+  ],
+  homeProgram: [
+    {name:"햄스트링 저강도 스트레칭", frequency:"매일", time:"좌우 각 60초 x 2회", caution:"통증이 생길 정도로 강하게 당기지 않습니다."},
+    {name:"앉은 자세 골반 정렬 연습", frequency:"주 5회", time:"5분", caution:"발바닥이 바닥 또는 발판에 닿도록 합니다."},
+    {name:"워커 보행 연습", frequency:"주 3~5회", time:"5~10분", caution:"피로하면 즉시 쉬고, 넘어짐 위험이 있는 장소는 피합니다."}
+  ],
+  visits: [
+    {date:"2026-07-03", summary:"좌측 하지 경직 증가 시 보폭 감소 관찰. AFO 착용 상태 양호. 가정운동은 주 4회 수행."},
+    {date:"2026-06-20", summary:"앉은 자세에서 우측 체중지지 우세. 발판 높이 조정 후 골반 기울어짐 감소."},
+    {date:"2026-06-10", summary:"X-ray 추적 결과 기록. 고관절 MP 28%, Cobb 18°로 정기 관찰 유지."}
+  ],
+  parentMessage: "현재는 기능을 무리하게 끌어올리는 것보다 성장 과정에서 고관절과 척추가 나빠지지 않도록 자세, 보조기, 가정운동을 안정적으로 유지하는 것이 중요합니다."
+};
+</script>
+
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow" id="centerEyebrow">개별 운동발달 관리 페이지</div>
+    <h1 id="pageTitle">-</h1>
+    <p class="subtitle" id="heroSummary">-</p>
+    <div class="chips" id="heroChips"></div>
+  </div>
+</header>
+
+<section class="notice container">
+  <div class="box">
+    <b>보호자 안내</b><br />
+    이 페이지는 센터 상담 내용을 보호자가 쉽게 확인하도록 정리한 참고 자료입니다. 진단, 처방, 수술 여부 결정은 담당 전문의 진료를 기준으로 합니다. 링크는 외부에 공유하지 말아 주세요.
+  </div>
+</section>
+
+<nav class="nav hide-print">
+  <div class="container nav-scroll">
+    <a href="#basic">기본 정보</a><a href="#surveillance">고관절·척추</a><a href="#goals">관리 목표</a><a href="#home">가정운동</a><a href="#visits">방문 기록</a>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="card" id="basic"><h2><span class="num">1</span>기본 정보</h2><div class="grid" id="basicGrid"></div></section>
+  <section class="card" id="surveillance"><h2><span class="num">2</span>고관절·척추 감시</h2><div class="grid" id="surveillanceGrid"></div><div id="surveillanceNotes"></div></section>
+  <section class="card" id="goals"><h2><span class="num">3</span>현재 관리 목표</h2><div id="goalList"></div></section>
+  <section class="card" id="home"><h2><span class="num">4</span>가정운동 프로그램</h2><div class="home-list" id="homeList"></div></section>
+  <section class="card" id="visits"><h2><span class="num">5</span>최근 방문 기록</h2><div class="timeline" id="visitList"></div></section>
+  <section class="card"><h2><span class="num">6</span>보호자에게 드리는 말</h2><p id="parentMessage" style="margin:0"></p></section>
+</main>
+
+<footer class="footer container">
+  <p><strong id="footerName">-</strong> 님의 개별 관리 정보입니다. 개인정보 보호를 위해 이름 대신 이니셜/코드 사용을 권장합니다.</p>
+  <p id="footerContact">-</p>
+</footer>
+
+<script>
+const GMFCS_DESC={1:"제한 없이 걷지만 속도·균형 등 고난도 운동에서 제한",2:"보조기구 없이 걷지만 장거리·불균형 지면에서 제한",3:"손으로 잡는 이동 보조기구를 사용해 걷는 수준",4:"자가 이동에 제한이 크고 보조 이동장비를 주로 사용",5:"머리·몸통 조절이 어렵고 이동에 전적인 보조 필요"};
+const MACS_DESC={1:"물건을 쉽고 성공적으로 다룸",2:"대부분 물건을 다루지만 속도·질이 감소",3:"도움 또는 준비가 있으면 물건을 다룸",4:"제한된 물건을 쉬운 상황에서 다룸",5:"물건을 다루기 어렵고 많은 도움이 필요"};
+const CFCS_DESC={1:"익숙하거나 낯선 사람과 효과적으로 의사소통",2:"대부분 효과적이나 속도가 느릴 수 있음",3:"익숙한 사람과 효과적 의사소통",4:"익숙한 사람과도 일관성 제한",5:"의사소통이 매우 제한적"};
+function ageGroup(age){if(age<=2)return"영아기(0~2세)";if(age<=6)return"전학령기(3~6세)";if(age<=12)return"학령기(7~12세)";if(age<=17)return"청소년기(13~17세)";return"성인기"}
+function field(label,value){return `<div class="field"><div class="label">${label}</div><div class="value">${value??"-"}</div></div>`}
+function riskMP(mp){if(mp==null)return {text:"측정 예정",cls:"warn",note:"고관절 X-ray 촬영 후 MP 값을 기록합니다."}; if(mp>=40)return {text:`${mp}%`,cls:"danger",note:"40% 이상은 아탈구 위험이 커질 수 있어 전문의 협진과 촬영 주기 단축을 고려합니다."}; if(mp>=30)return {text:`${mp}%`,cls:"warn",note:"30~40%는 주의 관찰 구간입니다. 자세관리와 정기 촬영을 꾸준히 유지합니다."}; return {text:`${mp}%`,cls:"good",note:"현재 기록상 비교적 안정 범위입니다. 정기 관찰을 지속합니다."}}
+function riskCobb(a){if(a==null)return {text:"측정 예정",cls:"warn",note:"척추 X-ray 촬영 후 Cobb 각도를 기록합니다."}; if(a>=40)return {text:`${a}°`,cls:"danger",note:"40° 이상은 전문의 상담이 권장되는 구간입니다."}; if(a>=20)return {text:`${a}°`,cls:"warn",note:"20~40°는 경도~중등도 범위로 성장기 추적 관찰이 중요합니다."}; return {text:`${a}°`,cls:"good",note:"현재 기록상 경미한 범위입니다. 자세관리와 정기 관찰을 유지합니다."}}
+function render(){const d=CLIENT_DATA,c=d.child,b=d.body,s=d.surveillance;
+  document.title=`${c.displayName} 관리 정보`; document.getElementById("centerEyebrow").textContent=`${d.center.name} · ${d.center.manager}`; document.getElementById("pageTitle").textContent=`${c.displayName} 님의 운동발달 관리 정보`; document.getElementById("heroSummary").textContent=c.mainConcern;
+  document.getElementById("heroChips").innerHTML=[`만 ${c.age}세`,c.gender,`업데이트 ${c.lastUpdated}`].map(x=>`<span class="chip">${x}</span>`).join("");
+  document.getElementById("basicGrid").innerHTML=field("GMFCS",`${c.gmfcs}단계<br><span class='small'>${GMFCS_DESC[c.gmfcs]||""}</span>`)+field("키 / 몸무게",`${b.heightCm}cm / ${b.weightKg}kg`)+field("연령대",ageGroup(c.age))+field("경직 정도",b.spasticity);
+  const mp=riskMP(s.hipMigrationPercent), cb=riskCobb(s.scoliosisAngle); document.getElementById("surveillanceGrid").innerHTML=field("고관절 MP",`<span class='pill ${mp.cls}'>${mp.text}</span><br><span class='small'>촬영일 ${s.hipDate}</span>`)+field("척추 Cobb 각도",`<span class='pill ${cb.cls}'>${cb.text}</span><br><span class='small'>촬영일 ${s.scoliosisDate}</span>`)+field("영상검사 요약",s.xraySummary)+field("다음 의학적 확인",s.nextMedicalCheck);
+  document.getElementById("surveillanceNotes").innerHTML=`<div class="alert ${mp.cls}">${mp.note}</div><div class="alert ${cb.cls}">${cb.note}</div>`;
+  document.getElementById("goalList").innerHTML=d.currentGoals.map((g,i)=>`<div class="goal"><div class="icon">${i+1}</div><div><b>${g.title}</b><span>${g.detail}</span></div></div>`).join("");
+  document.getElementById("homeList").innerHTML=d.homeProgram.map(h=>`<div class="home"><div class="home-title">${h.name}</div><div class="home-meta"><span>${h.frequency}</span><span>${h.time}</span></div><div class="small">주의: ${h.caution}</div></div>`).join("");
+  document.getElementById("visitList").innerHTML=d.visits.map(v=>`<div class="visit"><div class="visit-date">${v.date}</div><div>${v.summary}</div></div>`).join("");
+  document.getElementById("parentMessage").textContent=d.parentMessage; document.getElementById("footerName").textContent=c.displayName; document.getElementById("footerContact").textContent=`문의: ${d.center.phone} · ${d.center.email}`;
+}
+render();
+</script>
+</body>
+</html>

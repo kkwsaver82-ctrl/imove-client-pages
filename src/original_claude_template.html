@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 검색엔진 노출 방지: 이 페이지가 구글 등에 검색되지 않도록 막아줍니다 -->
+<meta name="robots" content="noindex, nofollow">
+<title>우리 아이 관리 정보</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bg: #F5F7F5;
+    --paper: #FFFFFF;
+    --ink: #1F2E2C;
+    --ink-soft: #52605C;
+    --teal: #2F6F62;
+    --teal-deep: #1E4B41;
+    --slate: #3D6B8C;
+    --amber: #B8763E;
+    --line: #E1E7E3;
+    --danger-bg: #FCEDE8;
+    --danger-ink: #9A3D24;
+    --ok-bg: #EAF3EE;
+    --ok-ink: #276148;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Pretendard', -apple-system, sans-serif;
+    line-height:1.6;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 20px;}
+
+  /* Hero */
+  .hero{
+    background: linear-gradient(135deg, var(--teal-deep), var(--teal));
+    color:#fff;
+    padding:44px 20px 34px;
+    border-radius:0 0 28px 28px;
+    margin-bottom:-20px;
+  }
+  .hero-inner{max-width:760px; margin:0 auto;}
+  .eyebrow{font-size:13px; letter-spacing:.08em; opacity:.8; margin-bottom:8px; font-weight:600;}
+  .hero h1{font-size:28px; margin:0 0 6px; font-weight:800;}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .chip{
+    background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);
+    padding:6px 12px;
+    border-radius:99px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .gmfcs-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#fff; color:var(--teal-deep);
+    padding:8px 16px; border-radius:99px;
+    font-weight:800; font-size:14px;
+    margin-top:14px;
+  }
+  .gmfcs-dot{width:10px; height:10px; border-radius:50%; background:var(--amber);}
+
+  /* Cards */
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px;
+    margin-top:20px;
+    box-shadow:0 1px 2px rgba(30,50,45,.04);
+  }
+  .card h2{
+    font-size:16px; margin:0 0 16px;
+    display:flex; align-items:center; gap:8px;
+    color:var(--teal-deep);
+  }
+  .card h2 .num{
+    font-size:12px; color:#fff; background:var(--teal);
+    width:22px; height:22px; border-radius:6px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-weight:700;
+  }
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){.grid2{grid-template-columns:1fr;}}
+  .field{border:1px solid var(--line); border-radius:10px; padding:12px 14px;}
+  .field .label{font-size:12px; color:var(--ink-soft); margin-bottom:4px;}
+  .field .value{font-size:16px; font-weight:700;}
+  .field .value.flag-warn{color:var(--danger-ink);}
+  .field .value.flag-ok{color:var(--ok-ink);}
+
+  .note{
+    margin-top:14px; padding:12px 14px; border-radius:10px;
+    background:var(--ok-bg); color:var(--ok-ink); font-size:14px;
+  }
+  .note.warn{background:var(--danger-bg); color:var(--danger-ink);}
+
+  .goal-item{
+    display:flex; gap:12px; padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .goal-item:last-child{border-bottom:none;}
+  .goal-icon{
+    width:30px; height:30px; border-radius:8px; flex:none;
+    background:var(--teal); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:800;
+  }
+  .goal-text b{display:block; margin-bottom:2px;}
+  .goal-text span{color:var(--ink-soft); font-size:14px;}
+
+  .footer-note{
+    font-size:12px; color:var(--ink-soft); text-align:center;
+    margin-top:30px; padding:0 20px; line-height:1.7;
+  }
+  .contact{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:6px;
+  }
+  .contact a{color:var(--slate); font-weight:700; text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">아이무브 김건우 선생님 개별 관리페이지</div>
+    <h1 id="patientTitle">-</h1>
+    <div class="hero-meta">
+      <span class="chip" id="ageChip">-</span>
+      <span class="chip" id="genderChip">-</span>
+      <span class="chip" id="updatedChip">-</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. 기본 신체정보 -->
+  <div class="card">
+    <h2><span class="num">1</span>기본 정보</h2>
+    <div class="grid2">
+      <div class="field"><div class="label">기능수준 (GMFCS)</div><div class="value" id="gmfcsField">-</div></div>
+      <div class="field"><div class="label">경직 정도 (MAS)</div><div class="value" id="spasticity">-</div></div>
+      <div class="field"><div class="label">좌·우측 우세</div><div class="value" id="dominantSide">-</div></div>
+      <div class="field"><div class="label">연령대 (생애주기)</div><div class="value" id="lifeStage">-</div></div>
+    </div>
+  </div>
+
+  <!-- 2. 고관절 -->
+  <div class="card">
+    <h2><span class="num">2</span>고관절 탈구 지수 (Migration Percentage)</h2>
+    <div class="field">
+      <div class="label">최근 측정값</div>
+      <div class="value" id="hipMPValue">-</div>
+    </div>
+    <div class="note" id="hipNote">-</div>
+  </div>
+
+  <!-- 3. 척추 -->
+  <div class="card">
+    <h2><span class="num">3</span>척추 측만증 (Cobb's Angle)</h2>
+    <div class="field">
+      <div class="label">최근 촬영 각도</div>
+      <div class="value" id="scoliosisValue">-</div>
+    </div>
+    <div class="note" id="scoliosisNote">-</div>
+  </div>
+
+  <!-- 4. X-ray -->
+  <div class="card">
+    <h2><span class="num">4</span>영상 검사 요약</h2>
+    <div class="field">
+      <div class="label">촬영일 / 판독 요약</div>
+      <div class="value" id="xraySummary" style="font-size:14px; font-weight:500;">-</div>
+    </div>
+    <div class="note">원본 X-ray 필름은 개인정보 보호를 위해 이 페이지에 게시하지 않습니다. 원본 확인이 필요하시면 센터로 문의해 주세요.</div>
+  </div>
+
+  <!-- 5. 연령/기능 맞춤 관리 목표 -->
+  <div class="card">
+    <h2><span class="num">5</span>지금 이 시기, 우리 아이 관리 방향</h2>
+    <div id="goalsList"></div>
+  </div>
+
+  <div class="footer-note">
+    <div>이 페이지는 <b id="patientNameFooter">-</b> 님의 재활 관리를 돕기 위해 개별적으로 제공되는 정보입니다.<br>
+    타인과 링크를 공유하지 말아 주세요. 정보는 담당 치료사와의 상담을 대체하지 않습니다.</div>
+    <div class="contact">
+      <span>문의</span>
+      <a href="tel:0000000000">senter@example.com</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ▼▼▼ 환자마다 이 부분만 수정해서 파일을 복사/저장하세요 ▼▼▼
+   ============================================================ */
+const patient = {
+  name: "홍길동",              // 이름 (또는 이니셜/코드 권장: "ㅎㄱㄷ", "환자A" 등)
+  age: 6,                      // 만 나이 (숫자)
+  gender: "남",                 // "남" / "여"
+  gmfcs: 3,                    // GMFCS 레벨 1~5 (숫자)
+  surgeryDate: "2024-11-02",   // 최근 수술일, 없으면 "" (빈칸)
+  spasticity: "MAS 2",          // 경직 정도 서술 (MAS 수치만)
+  side: "좌측",                 // 좌·우측 우세: "좌측" / "우측" / "양측(대칭)"
+  hipMigrationPercent: 28,     // 고관절 탈구 지수 (%), 없으면 null
+  scoliosisAngle: 18,          // 척추측만 각도 (도), 없으면 null
+  xrayDate: "2025-06-10",
+  xraySummary: "골반 촬영상 양측 대칭적, 우측 경도 아탈구 소견 관찰. 6개월 후 재촬영 권고.",
+  lastUpdated: "2025-06-20"
+};
+/* ============================================================
+   ▲▲▲ 여기까지만 수정하면 아래는 자동으로 계산됩니다 ▲▲▲
+   ============================================================ */
+
+const GMFCS_DESC = {
+  1: "실내외 대부분 보조기구 없이 이동 가능",
+  2: "보조기구 없이 걷지만 장거리·균형에 제한",
+  3: "보행 보조기구를 사용해 이동",
+  4: "이동에 보조가 많이 필요 (전동휠체어 등 활용)",
+  5: "머리·몸통 조절 어려움, 전적인 보조 필요"
+};
+
+// CP Alliance Australia(cerebralpalsy.org.au) "Support by Age Group" 기준
+function ageGroup(age){
+  if(age <= 2) return "영아기(0~2세)";
+  if(age <= 6) return "전학령기(3~6세)";
+  if(age <= 12) return "학령기(7~12세)";
+  if(age <= 17) return "청소년기(13~17세)";
+  if(age <= 30) return "청년기(18~30세)";
+  if(age <= 65) return "성인기(31~65세)";
+  return "노년기(65세 이상)";
+}
+
+// 연령대 + GMFCS 조합에 따른 관리 목표 자동 생성
+function buildGoals(p){
+  const grp = ageGroup(p.age);
+  const goals = [];
+
+  // 공통: 자세관리(24시간 포지셔닝)
+  goals.push({
+    icon:"자세",
+    title:"24시간 자세 관리(포지셔닝)",
+    text: p.gmfcs >= 3
+      ? "수면·좌석·이동 시 비대칭 자세를 줄이는 것이 고관절/척추 변형 예방에 가장 중요한 시기입니다. 야간 자세 보조기(슬리핑 시스템) 사용을 권장합니다."
+      : "장시간 한쪽으로 눕거나 앉는 습관이 생기지 않도록 생활 속 자세를 관찰해 주세요."
+  });
+
+  // 연령대별 핵심 목표 (CP Alliance 생애주기 구분 기준)
+  if(grp.startsWith("영아")){
+    goals.push({
+      icon:"발달",
+      title:"조기 운동발달 촉진",
+      text:"뒤집기·앉기·기기 등 발달 단계에 맞는 자극과 반복 훈련이 이후 기능 수준에 큰 영향을 줍니다. 이 시기의 목표는 '완치'가 아니라 '가능한 최대 기능 확보'입니다."
+    });
+    goals.push({
+      icon:"감시",
+      title:"고관절 정기 감시(Hip Surveillance)",
+      text:"이 시기부터 6~12개월 간격의 정기 X-ray 추적 관찰이 필요합니다. 탈구는 증상이 늦게 나타나므로 정기검진이 핵심입니다."
+    });
+  } else if(grp.startsWith("전학령기")){
+    goals.push({
+      icon:"준비",
+      title:"취학 전 기능 다지기",
+      text:"학습·행동·의사소통·사회성 발달이 활발한 시기로, 입학 후 학교 환경(이동, 좌석, 자조기술)에 적응할 수 있도록 기초 기능을 다집니다."
+    });
+    goals.push({
+      icon:"감시",
+      title:"고관절·척추 정기 감시",
+      text:"성장이 빠른 시기이므로 고관절 탈구지수와 척추 정렬을 정기적으로 확인하는 것이 중요합니다."
+    });
+  } else if(grp.startsWith("학령기")){
+    goals.push({
+      icon:"기능",
+      title:"기능 유지 및 학교생활 적응",
+      text:"교실 좌석, 이동 동선, 체육활동 참여 방식 등 학교 환경에서의 자세·이동 전략을 함께 점검할 시기입니다."
+    });
+    goals.push({
+      icon:"근력",
+      title:"근력·지구력 훈련 비중 확대",
+      text:"성장에 따른 체중 증가를 근력이 따라가지 못하면 기능이 저하될 수 있어, 이 시기 근력 유지 운동이 특히 중요합니다."
+    });
+  } else if(grp.startsWith("청소년")){
+    goals.push({
+      icon:"성장",
+      title:"급성장기 변형 위험 관리",
+      text:"급성장기에는 척추측만 각도와 고관절 지수가 빠르게 악화될 수 있어 관찰 주기를 단축하는 것을 고려해야 합니다."
+    });
+    goals.push({
+      icon:"전환",
+      title:"성인기 전환 준비",
+      text:"성인 의료체계 전환, 자기관리 교육(스스로 스트레칭·자세 인지)을 함께 시작할 시기입니다."
+    });
+  } else if(grp.startsWith("청년기")){
+    goals.push({
+      icon:"자립",
+      title:"자립 생활 및 사회 참여",
+      text:"진로, 자립생활, 지역사회 참여 확대에 맞춰 이동성과 체력 유지에 중점을 둔 운동 전략이 필요한 시기입니다."
+    });
+  } else if(grp.startsWith("성인기")){
+    goals.push({
+      icon:"유지",
+      title:"기능 유지 및 이차 합병증 예방",
+      text:"통증, 관절 구축, 골밀도 저하 등 이차적 문제 예방과 건강한 생활습관 유지에 중점을 둡니다."
+    });
+  } else {
+    goals.push({
+      icon:"건강",
+      title:"건강 유지 및 독립성 보존",
+      text:"낙상 예방, 관절 보호, 심폐 건강 유지를 통해 독립적인 일상생활을 최대한 오래 지속하는 데 목적을 둡니다."
+    });
+  }
+
+  // GMFCS 기반 운동 목적
+  goals.push({
+    icon:"목표",
+    title:`GMFCS ${p.gmfcs}단계에 맞는 운동 목적`,
+    text: gmfcsGoalText(p.gmfcs)
+  });
+
+  return goals;
+}
+
+function gmfcsGoalText(level){
+  const map = {
+    1: "속도·균형·달리기 등 상위 이동 기능의 질을 높이는 데 목적을 둡니다.",
+    2: "장거리 보행 지구력과 계단·불균형 지면 등 환경 적응력 향상이 목적입니다.",
+    3: "보조기구를 활용한 실내외 이동의 안전성과 효율성을 높이는 데 목적을 둡니다.",
+    4: "스스로 자세를 바꾸는 능력과 앉은 자세의 안정성 확보가 우선 목적입니다.",
+    5: "관절 구축 예방, 편안한 자세 유지, 보호자 돌봄 부담 경감이 핵심 목적입니다."
+  };
+  return map[level] || "";
+}
+
+// ---- 렌더링 ----
+document.getElementById("patientTitle").textContent = patient.name + " 님의 관리 정보";
+document.getElementById("patientNameFooter").textContent = patient.name;
+document.getElementById("ageChip").textContent = "만 " + patient.age + "세";
+document.getElementById("genderChip").textContent = patient.gender;
+document.getElementById("updatedChip").textContent = "업데이트 " + patient.lastUpdated;
+
+document.getElementById("gmfcsField").textContent =
+  patient.gmfcs + "단계 · " + (GMFCS_DESC[patient.gmfcs] || "");
+document.getElementById("spasticity").textContent = patient.spasticity || "-";
+document.getElementById("dominantSide").textContent = patient.side || "-";
+document.getElementById("lifeStage").textContent = ageGroup(patient.age);
+
+// 고관절
+if(patient.hipMigrationPercent === null || patient.hipMigrationPercent === undefined){
+  document.getElementById("hipMPValue").textContent = "측정 예정";
+  document.getElementById("hipNote").textContent = "다음 방문 시 X-ray 촬영 후 기록될 예정입니다.";
+} else{
+  const mp = patient.hipMigrationPercent;
+  document.getElementById("hipMPValue").textContent = mp + " %";
+  let noteEl = document.getElementById("hipNote");
+  if(mp >= 40){
+    document.getElementById("hipMPValue").classList.add("flag-warn");
+    noteEl.classList.add("warn");
+    noteEl.textContent = "40% 이상은 아탈구 위험 구간으로, 정형외과 협진 및 촬영 주기 단축이 필요할 수 있습니다.";
+  } else if(mp >= 30){
+    noteEl.textContent = "30~40%는 주의 관찰 구간입니다. 자세관리와 정기 촬영을 꾸준히 유지해 주세요.";
+  } else{
+    document.getElementById("hipMPValue").classList.add("flag-ok");
+    noteEl.textContent = "안정적인 범위입니다. 정기 관찰을 지속합니다.";
+  }
+}
+
+// 척추
+if(patient.scoliosisAngle === null || patient.scoliosisAngle === undefined){
+  document.getElementById("scoliosisValue").textContent = "측정 예정";
+  document.getElementById("scoliosisNote").textContent = "다음 방문 시 촬영 후 기록될 예정입니다.";
+} else{
+  const angle = patient.scoliosisAngle;
+  document.getElementById("scoliosisValue").textContent = angle + "°";
+  let sNote = document.getElementById("scoliosisNote");
+  if(angle >= 40){
+    document.getElementById("scoliosisValue").classList.add("flag-warn");
+    sNote.classList.add("warn");
+    sNote.textContent = "40° 이상은 중등도~중증 구간으로, 수술적 치료를 포함한 전문의 상담이 권장됩니다.";
+  } else if(angle >= 20){
+    sNote.textContent = "20~40°는 경도~중등도 구간입니다. 보조기 착용 여부를 포함해 정기적으로 추적 관찰합니다.";
+  } else{
+    document.getElementById("scoliosisValue").classList.add("flag-ok");
+    sNote.textContent = "경미한 범위로, 자세관리를 통해 진행을 늦추는 데 중점을 둡니다.";
+  }
+}
+
+document.getElementById("xraySummary").textContent =
+  (patient.xrayDate ? patient.xrayDate + " 촬영 — " : "") + (patient.xraySummary || "기록된 내용이 없습니다.");
+
+// 목표 리스트 렌더
+const goalsList = document.getElementById("goalsList");
+buildGoals(patient).forEach(g=>{
+  const div = document.createElement("div");
+  div.className = "goal-item";
+  div.innerHTML = `<div class="goal-icon">${g.icon.slice(0,1)}</div>
+                    <div class="goal-text"><b>${g.title}</b><span>${g.text}</span></div>`;
+  goalsList.appendChild(div);
+});
+</script>
+</body>
+</html>
